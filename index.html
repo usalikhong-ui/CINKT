@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="zh-Hant" data-initial-mode="oracle">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f5f2ea">
+  <meta name="description" content="求一支籤，或從答案之書撕下一頁。讓心中的問題，在紙與籤之間找到回音。">
+  <title>一問 · 心有所問，籤有所答</title>
+  <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="一問">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="book.css">
+  <script src="install.mjs" type="module"></script>
+  <script src="app.mjs" type="module"></script>
+</head>
+<body>
+  <div class="paper-grain" aria-hidden="true"></div>
+  <div class="page">
+    <header class="header">
+      <a class="brand" href="./" aria-label="一問，首頁"><span class="brand-seal" aria-hidden="true">一<br>問</span><span class="brand-name">一問<span class="brand-en">YI WEN</span></span></a>
+      <nav aria-label="網站選項">
+        <div class="mode-switch" data-active="oracle" role="tablist" aria-label="選擇問答方式" aria-orientation="horizontal">
+          <span class="mode-indicator" aria-hidden="true"></span>
+          <button type="button" role="tab" id="tab-oracle" aria-controls="oracle-panel" aria-selected="true" tabindex="0" data-mode="oracle">求籤</button>
+          <button type="button" role="tab" id="tab-book" aria-controls="book-panel" aria-selected="false" tabindex="-1" data-mode="book">答案之書</button>
+        </div>
+        <span class="nav-divider" aria-hidden="true"></span>
+        <button class="sound-button" id="sound" aria-label="關閉音效" aria-pressed="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4V5Z"/><g class="sound-waves"><path d="M15 8a6 6 0 0 1 0 8m3-11a10 10 0 0 1 0 14"/></g><path class="sound-off" d="m15 9 6 6m0-6-6 6"/></svg><span id="sound-label">音效開啟</span></button>
+        <span class="nav-divider" aria-hidden="true"></span>
+        <button class="about-button" id="about">求籤須知</button>
+        <button class="install-button" id="install-app" type="button" aria-label="加入主畫面" title="將一問加入主畫面"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m3 10 9-7 9 7M5 9v12h6v-6h4v6h4v-9"/><path d="M19 2v6m-3-3h6"/></svg><span id="install-label">加入主畫面</span></button>
+      </nav>
+    </header>
+    <main>
+      <div id="oracle-panel" role="tabpanel" aria-labelledby="tab-oracle" tabindex="0">
+      <section class="oracle" aria-labelledby="oracle-title">
+        <div class="intro">
+          <p class="eyebrow"><span></span> 一事一問・隨心而行 <span></span></p>
+          <h1 id="oracle-title">心有所問，<span>籤有所答。</span></h1>
+          <p class="subtitle">把心裡的猶豫，交給一支籤。</p>
+        </div>
+        <div class="scene" id="scene">
+          <div class="halo" aria-hidden="true"></div>
+          <p class="side-note" aria-hidden="true">靜心片刻<span>默念心中一問</span></p>
+          <div class="round-seal" aria-hidden="true"><span>一念<br>一籤</span></div>
+          <svg class="cloud cloud-left" viewBox="0 0 130 44" aria-hidden="true"><path d="M0 36h88c17 0 17-19 3-19-5 0-8 3-8 7M22 28h28C34 6 68-8 78 12c16-7 30 7 25 17h27M35 41h67"/></svg>
+          <svg class="cloud cloud-right" viewBox="0 0 130 44" aria-hidden="true"><path d="M0 36h88c17 0 17-19 3-19-5 0-8 3-8 7M22 28h28C34 6 68-8 78 12c16-7 30 7 25 17h27M35 41h67"/></svg>
+          <div class="vessel-wrap">
+            <div class="ground-shadow"></div>
+            <svg class="vessel" viewBox="0 0 280 360" role="img" aria-label="盛滿竹籤的木製籤筒">
+              <defs>
+                <linearGradient id="wood" x1="0" x2="1"><stop stop-color="#8d4b2e"/><stop offset=".22" stop-color="#bd7849"/><stop offset=".48" stop-color="#ce905d"/><stop offset=".78" stop-color="#ab633b"/><stop offset="1" stop-color="#743b29"/></linearGradient>
+                <linearGradient id="bamboo" x1="0" x2="1"><stop stop-color="#ba8953"/><stop offset=".4" stop-color="#edce94"/><stop offset="1" stop-color="#d7ae72"/></linearGradient>
+                <linearGradient id="rim" x1="0" x2="1"><stop stop-color="#653a27"/><stop offset=".45" stop-color="#c18b58"/><stop offset="1" stop-color="#70402b"/></linearGradient>
+                <pattern id="grain" width="23" height="140" patternUnits="userSpaceOnUse"><path d="M5 0c-7 40 6 70 0 140M17 0c6 55-7 85 0 140" fill="none" stroke="#5e301b" stroke-width=".7" opacity=".15"/></pattern>
+              </defs>
+              <g id="shaker">
+                <ellipse cx="140" cy="164" rx="81" ry="24" fill="#623b28"/>
+                <ellipse cx="140" cy="163" rx="70" ry="17" fill="#422d23"/>
+                <g class="sticks" fill="url(#bamboo)" stroke="#af7b48" stroke-width=".7">
+                  <g transform="rotate(-19 126 183)"><rect x="92" y="54" width="16" height="151" rx="3"/><path d="M95 57h10v30H95Z" fill="#a84936" stroke="none"/><path d="M96 93v77" opacity=".3"/></g>
+                  <g transform="rotate(17 156 185)"><rect x="167" y="40" width="16" height="170" rx="3"/><path d="M170 43h10v32h-10Z" fill="#ad4e3a" stroke="none"/><path d="M171 84v91" opacity=".3"/></g>
+                  <g transform="rotate(-10 127 189)"><rect x="111" y="28" width="17" height="180" rx="3"/><path d="M114 31h11v32h-11Z" fill="#a94432" stroke="none"/><path d="M115 75v91" opacity=".3"/></g>
+                  <g transform="rotate(8 151 191)"><rect x="145" y="19" width="17" height="191" rx="3"/><path d="M148 22h11v33h-11Z" fill="#b44f39" stroke="none"/><path d="M149 67v102" opacity=".3"/></g>
+                  <g transform="rotate(-25 129 190)"><rect x="79" y="81" width="16" height="136" rx="3"/><path d="M82 84h10v28H82Z" fill="#ad4e3a" stroke="none"/></g>
+                  <g transform="rotate(24 154 191)"><rect x="183" y="74" width="16" height="140" rx="3"/><path d="M186 77h10v28h-10Z" fill="#a74734" stroke="none"/></g>
+                  <g transform="rotate(3 142 190)"><rect x="132" y="52" width="17" height="167" rx="3"/><path d="M135 55h11v32h-11Z" fill="#af4c36" stroke="none"/><path d="M136 98v87" opacity=".3"/></g>
+                  <g transform="rotate(-8 134 193)"><rect x="113" y="88" width="17" height="130" rx="3"/><path d="M116 91h11v30h-11Z" fill="#a84634" stroke="none"/></g>
+                  <g transform="rotate(13 151 191)"><rect x="153" y="87" width="17" height="130" rx="3"/><path d="M156 90h11v30h-11Z" fill="#ab4935" stroke="none"/></g>
+                </g>
+                <path d="M59 164c0 15 162 15 162 0l-9 158c-2 27-142 27-144 0Z" fill="url(#wood)" stroke="#8c5032" stroke-width="1"/>
+                <path d="M59 164c0 15 162 15 162 0l-9 158c-2 27-142 27-144 0Z" fill="url(#grain)"/>
+                <path d="M60 165c3 22 157 23 160 0" fill="none" stroke="url(#rim)" stroke-width="9"/>
+                <path d="M68 312c30 13 114 14 145 0l-1 11c-13 24-130 24-144 0Z" fill="#7d422b" opacity=".7"/>
+                <path d="M68 312c34 15 115 15 145 0M64 183c35 16 117 16 153 0" fill="none" stroke="#e3b27a" stroke-width="1.5" opacity=".6"/>
+                <path d="M91 195v104M190 195v104" stroke="#f1c087" stroke-width="1" opacity=".2"/>
+                <path d="m140 208 36 39-36 39-36-39Z" fill="#a3402e" stroke="#dbad77" stroke-width="1.5"/>
+                <path d="m140 214 30 33-30 33-30-33Z" fill="none" stroke="#e1b17a" stroke-width=".7"/>
+                <text x="140" y="258" text-anchor="middle" fill="#f2d9ad" font-size="31" font-family="'Noto Serif TC',serif">問</text>
+              </g>
+            </svg>
+          </div>
+          <div class="fortune" id="fortune" aria-hidden="true" hidden>
+            <span class="fortune-top">一 問</span><span class="fortune-rule"></span>
+            <strong id="answer"></strong><span class="fortune-rule"></span><span class="fortune-end">隨 心</span>
+          </div>
+        </div>
+        <div class="interaction">
+          <p class="status" id="oracle-status" role="status" aria-live="polite">靜下心，想一個能用「是」或「否」回答的問題。</p>
+          <button class="ask-button" id="ask"><span class="button-mark" aria-hidden="true">✦</span><span id="ask-label">問</span><span class="button-mark" aria-hidden="true">✦</span></button>
+          <p class="hint" id="oracle-hint">輕按一問，靜候籤落</p>
+        </div>
+      </section>
+      <div class="ritual-note"><span class="little-flower" aria-hidden="true">✳</span><p>世間事，未必只有一個答案。<span>願這一籤，讓你更聽見自己的心。</span></p></div>
+      </div>
+      <div id="book-panel" class="book-page" role="tabpanel" aria-labelledby="tab-book" tabindex="0" hidden>
+      <section class="book-oracle" aria-labelledby="book-title">
+        <div class="intro">
+          <p class="eyebrow"><span></span> 心有千結・書有回音 <span></span></p>
+          <h1 id="book-title">答案之書</h1>
+          <p class="subtitle">一頁留白，容得下心中千迴百轉。</p>
+        </div>
+        <div class="book-stage" id="book-stage">
+          <p class="book-side-note" aria-hidden="true">問在心裡<span>答在紙上</span></p>
+          <div class="book-halo" aria-hidden="true"></div>
+          <div class="book-object" aria-hidden="true">
+            <div class="book-cover"></div>
+            <div class="page-stack stack-one"></div><div class="page-stack stack-two"></div>
+            <div class="left-leaf"><div class="leaf-frame"><span class="book-title">答案之書</span><span class="book-colophon">一問藏書</span></div><span class="leaf-inscription">有些話，讀懂之前<br>先讓它住進心裡。</span></div>
+            <div class="right-leaf"><div class="empty-lines"></div></div>
+            <div class="binding"><i></i><i></i><i></i><i></i><i></i></div>
+            <div class="ribbon"></div>
+          </div>
+          <div class="answer-sheet" id="answer-sheet" aria-hidden="true">
+            <div class="sheet-inner">
+              <span class="sheet-heading">一 頁・一 答</span>
+              <div class="unread-page"><span>靜候</span><span>心中回音</span><span class="unread-rule"></span></div>
+              <p class="book-answer" id="book-answer"></p>
+              <span class="sheet-footer">留白處，自有你的答案</span><span class="sheet-seal">心</span>
+            </div>
+            <div class="page-curl"></div><div class="tear-line"></div>
+          </div>
+          <div class="paper-fibre fibre-one" aria-hidden="true"></div><div class="paper-fibre fibre-two" aria-hidden="true"></div><div class="paper-fibre fibre-three" aria-hidden="true"></div>
+        </div>
+        <div class="interaction">
+          <p class="status" id="book-status" role="status" aria-live="polite" aria-atomic="true">正在翻開書頁……</p>
+          <button class="ask-button book-draw" id="draw-page" disabled><span class="button-mark" aria-hidden="true">✦</span><span id="draw-label">撕下一頁</span><span class="button-mark" aria-hidden="true">✦</span></button>
+          <p class="hint" id="book-hint">默念一個問題，把餘下的交給紙頁</p>
+        </div>
+      </section>
+      <div class="ritual-note"><span class="little-flower" aria-hidden="true">✳</span><p>字句未必說破，心裡自有回音。<span>你讀到的，也許正是你想起的。</span></p></div>
+      </div>
+    </main>
+    <footer><span>一問 <span class="footer-dot">·</span> 給猶豫，一點回音</span><span>答案隨緣，心由自己作主</span></footer>
+  </div>
+  <dialog id="instructions" aria-labelledby="dialog-title">
+    <button id="close-dialog" class="close-dialog" aria-label="關閉使用須知">×</button>
+    <span class="dialog-seal" id="dialog-seal" aria-hidden="true">問</span><h2 id="dialog-title">求籤須知</h2>
+    <div id="oracle-help"><p>先靜下心，默念一個能以「是」或「否」回答的問題，再輕按「問」，聽籤聲落下。</p><p class="dialog-foot">每次求籤皆獨立隨機。音效可於右上角開關；問題只需默念，毋須輸入。</p></div>
+    <div id="book-help" hidden><p>靜下心，默念一個問題。輕按「撕下一頁」，聽紙纖維慢慢分開，讓留在紙上的字，回應此刻的你。</p><p>每次會從書中隨機抽出一段話。留一點空白，讓自己的心接著說。</p><p class="dialog-foot">問題只需默念，毋須輸入。右上角可以開關音效。</p></div>
+    <button class="dialog-confirm" id="understood">心中有問，便問</button>
+  </dialog>
+  <p class="install-status" id="install-status" role="status" aria-live="polite"></p>
+  <dialog class="install-guide" id="install-guide" aria-labelledby="install-title" aria-describedby="install-intro">
+    <button id="install-close" class="close-dialog" type="button" aria-label="關閉加入主畫面說明">×</button>
+    <img class="install-preview" src="icons/icon-192.png" width="72" height="72" alt="一問專用印章圖示">
+    <h2 id="install-title">把一問，留在主畫面</h2>
+    <p id="install-intro">把這枚印章留在主畫面，下次心中有問，輕觸便可回來。</p>
+    <ol id="install-steps"></ol>
+    <p class="dialog-foot" id="install-note"></p>
+    <button class="dialog-confirm" id="install-native" type="button" hidden>加入主畫面</button>
+    <button class="install-understood" id="install-understood" type="button">知道了</button>
+  </dialog>
+</body>
+</html>
