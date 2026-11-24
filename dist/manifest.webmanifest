@@ -1,0 +1,18 @@
+{
+  "id": "./",
+  "name": "一問 · 求籤與答案之書",
+  "short_name": "一問",
+  "description": "求一支籤，或撕下一頁答案。給猶豫，一點回音。",
+  "lang": "zh-Hant",
+  "start_url": "./#oracle",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f5f2ea",
+  "theme_color": "#f5f2ea",
+  "prefer_related_applications": false,
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icons/maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

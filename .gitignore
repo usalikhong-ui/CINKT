@@ -1,0 +1,12 @@
+# Local development and account state
+.DS_Store
+.env
+.env.*
+!.env.example
+node_modules/
+.firebase/
+.firebaserc
+firebase-debug.log*
+.openai/
+*.pem
+*.key
