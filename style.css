@@ -78,3 +78,40 @@
   color: #76352b;
   text-underline-offset: 3px;
 }
+
+.lot-topics-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  border-top: 1px solid #e4d5ba;
+  padding-top: 6px;
+}
+.lot-topics-header h3 {
+  margin: 0;
+  font-size: 17px;
+  color: #3d3027;
+}
+.lot-topics-all {
+  min-height: 44px;
+  padding: 6px 1px 6px 10px;
+  background: transparent;
+  border: 0;
+  color: #76352b;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  font-size: 14px;
+}
+.lot-topics details {
+  border-bottom: 1px solid #e9dcc7;
+}
+.lot-topics summary {
+  font-size: 15px;
+  font-weight: 600;
+  color: #52392e;
+}
+.lot-topics p {
+  padding-left: 12px;
+  border-left: 2px solid #e0cdb1;
+  font-size: 15px;
+}
