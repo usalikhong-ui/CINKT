@@ -22,3 +22,59 @@
 @media(max-width:1120px){.header nav{gap:15px}.header .install-button{padding:8px 11px}.header .install-button #install-label{display:none}}
 @media(max-width:640px){.header nav{gap:10px}.header .install-button{width:40px;min-height:40px;padding:8px}.header .install-button svg{width:19px;height:19px}.header .about-button{font-size:13px;letter-spacing:.03em}.header nav>.nav-divider{display:none}.install-guide h2{font-size:21px}}
 .install-guide{max-height:calc(100dvh - 36px);overflow-y:auto;overscroll-behavior:contain}
+
+.fortune.numbered strong {
+  font-size: 22px;
+  line-height: 1.5;
+  letter-spacing: .12em;
+  writing-mode: vertical-rl;
+}
+
+.lot-result {
+  width: min(100%, 500px);
+  margin: 28px auto 0;
+  padding: clamp(20px, 5vw, 32px);
+  background: #fffaf1;
+  color: #3d3027;
+  border: 1px solid #d8bc95;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.lot-result[hidden] { display: none; }
+.lot-result-meta { display: flex; justify-content: center; align-items: center; gap: 12px; }
+.lot-grade {
+  padding: 1px 10px 3px;
+  border: 1px solid #b57d6e;
+  border-radius: 18px;
+  color: #8b3029;
+}
+
+.lot-result h2 {
+  margin: 12px 0;
+  font: 700 clamp(22px, 5vw, 30px)/1.35 var(--serif);
+}
+.lot-poem {
+  margin: 12px 0 20px;
+  font: 600 clamp(17px, 4.5vw, 23px)/1.8 var(--serif);
+  letter-spacing: .12em;
+}
+.lot-poem span { display: block; }
+.lot-reading {
+  border-top: 1px solid #e4d5ba;
+  text-align: left;
+}
+.lot-reading summary {
+  min-height: 44px;
+  padding: 12px 0;
+  cursor: pointer;
+  color: #822e25;
+  font-weight: 700;
+}
+.lot-reading p { margin: 0 0 14px; line-height: 1.8; }
+.lot-source {
+  display: inline-block;
+  padding: 8px 0 0;
+  color: #76352b;
+  text-underline-offset: 3px;
+}

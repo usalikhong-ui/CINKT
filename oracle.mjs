@@ -1,4 +1,5 @@
-import { drawOutcome } from './lottery.mjs';
+import { drawIndex } from './lottery.mjs';
+import { sticks, stickSource } from './fortune-sticks.mjs';
 
 function knock(ctx, master, track, at, pitch, level = 0.22, length = 0.065) {
   const osc = track(ctx.createOscillator());
@@ -47,45 +48,75 @@ export function initOracle(root, sounds) {
   const hint = q('#oracle-hint');
   const fortune = q('#fortune');
   const answer = q('#answer');
-const answers = {
-  yes: { text: '是', message: '是。心中所想，不妨向前一步。', hint: '願你心之所向，皆有回響' },
-  no: { text: '否', message: '否。停一停，或許會看見另一條路。', hint: '慢一點，也有慢一點的風景' },
-  later: { text: '宜改天再問', message: '宜改天再問。時機未到，讓答案再等一等。', hint: '留一點餘地給明天' }
-};
-let busy = false;
-ask.addEventListener('click', () => {
-  if (busy) return;
-  let result;
-  try { result = drawOutcome(); }
-  catch {
-    status.textContent = '未能抽籤，請再試一次。';
-    return;
-  }
-  busy = true;
-  ask.disabled = true;
-  ask.setAttribute('aria-busy', 'true');
-  askLabel.textContent = '搖籤中';
-  fortune.hidden = true;
-  scene.classList.remove('has-result');
-  scene.classList.add('shaking');
-  status.textContent = '心中默念，靜候一籤……';
-  hint.textContent = '籤聲起，心慢下來';
-  sounds.play('oracle', scheduleSound);
-  setTimeout(() => {
-    scene.classList.remove('shaking');
-    answer.textContent = answers[result].text;
-    fortune.classList.toggle('rare', result === 'later');
-    fortune.hidden = false;
-    scene.classList.add('has-result');
-    askLabel.textContent = '籤落';
-  }, 2100);
-  setTimeout(() => {
-    status.textContent = answers[result].message;
-    hint.textContent = answers[result].hint;
-    askLabel.textContent = '再問一籤';
-    ask.disabled = false;
-    ask.removeAttribute('aria-busy');
-    busy = false;
-  }, 3000);
-});
+  const result = q('#oracle-result');
+  const resultNumber = q('#oracle-result-number');
+  const resultTitle = q('#oracle-result-title');
+  const resultGrade = q('#oracle-result-grade');
+  const poem = q('#oracle-poem');
+  const explanation = q('#oracle-reading');
+  const details = q('#oracle-details');
+  const source = q('#oracle-source');
+  const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
+  let busy = false;
+
+  ask.addEventListener('click', () => {
+    if (busy) return;
+
+    let index;
+    try {
+      index = drawIndex(sticks.length);
+    } catch {
+      status.textContent = '未能抽籤，請再試一次。';
+      return;
+    }
+
+    const number = index + 1;
+    const label = `第 ${number} 籤`;
+    const [title, grade, lines, reading] = sticks[index];
+    busy = true;
+    ask.disabled = true;
+    ask.setAttribute('aria-busy', 'true');
+    askLabel.textContent = '搖籤中';
+    fortune.hidden = true;
+    result.hidden = true;
+    details.open = false;
+    scene.classList.remove('has-result');
+    scene.classList.add('shaking');
+    status.textContent = '心中默念，靜候一籤……';
+    hint.textContent = '籤聲起，心慢下來';
+    sounds.play('oracle', scheduleSound);
+
+    setTimeout(() => {
+      scene.classList.remove('shaking');
+      answer.textContent = label.replaceAll(' ', '');
+      fortune.hidden = false;
+      scene.classList.add('has-result');
+      askLabel.textContent = '籤落';
+    }, 2100);
+
+    setTimeout(() => {
+      resultNumber.textContent = label;
+      resultTitle.textContent = title;
+      resultGrade.textContent = grade;
+      const verses = lines.map(line => {
+        const verse = document.createElement('span');
+        verse.textContent = line;
+        return verse;
+      });
+      poem.replaceChildren(...verses);
+      explanation.textContent = reading;
+      source.href = new URL(`${number}/zh-TW`, stickSource);
+      result.hidden = false;
+      status.textContent = `抽得${label}「${title}」，${grade}。`;
+      hint.textContent = '展開「白話解籤」查看籤意';
+      askLabel.textContent = '再問一籤';
+      ask.disabled = false;
+      ask.removeAttribute('aria-busy');
+      busy = false;
+
+      if (!root.hidden && (document.activeElement === ask || document.activeElement === document.body)) {
+        result.scrollIntoView({ block: 'nearest', behavior: reducedMotion.matches ? 'auto' : 'smooth' });
+      }
+    }, 3000);
+  });
 }
