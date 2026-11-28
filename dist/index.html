@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#f5f2ea">
-  <meta name="description" content="求一支籤，或從答案之書撕下一頁。讓心中的問題，在紙與籤之間找到回音。">
-  <title>一問 · 心有所問，籤有所答</title>
+  <meta name="description" content="求一支黃大仙靈籤，閱覽傳統籤詩同白話解籤，或從答案之書撕下一頁。">
+  <title>黃大仙靈籤 · 一問</title>
   <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png">
@@ -29,7 +29,7 @@
       <nav aria-label="網站選項">
         <div class="mode-switch" data-active="oracle" role="tablist" aria-label="選擇問答方式" aria-orientation="horizontal">
           <span class="mode-indicator" aria-hidden="true"></span>
-          <button type="button" role="tab" id="tab-oracle" aria-controls="oracle-panel" aria-selected="true" tabindex="0" data-mode="oracle">求籤</button>
+          <button type="button" role="tab" id="tab-oracle" aria-controls="oracle-panel" aria-selected="true" tabindex="0" data-mode="oracle">黃大仙靈籤</button>
           <button type="button" role="tab" id="tab-book" aria-controls="book-panel" aria-selected="false" tabindex="-1" data-mode="book">答案之書</button>
         </div>
         <span class="nav-divider" aria-hidden="true"></span>
@@ -44,8 +44,8 @@
       <section class="oracle" aria-labelledby="oracle-title">
         <div class="intro">
           <p class="eyebrow"><span></span> 一事一問・隨心而行 <span></span></p>
-          <h1 id="oracle-title">心有所問，<span>籤有所答。</span></h1>
-          <p class="subtitle">把心裡的猶豫，交給一支籤。</p>
+          <h1 id="oracle-title">黃大仙<span>靈籤</span></h1>
+          <p class="subtitle">從一百支傳統靈籤中，隨機抽取一支。</p>
         </div>
         <div class="scene" id="scene">
           <div class="halo" aria-hidden="true"></div>
@@ -88,16 +88,26 @@
               </g>
             </svg>
           </div>
-          <div class="fortune" id="fortune" aria-hidden="true" hidden>
+          <div class="fortune numbered" id="fortune" aria-hidden="true" hidden>
             <span class="fortune-top">一 問</span><span class="fortune-rule"></span>
-            <strong id="answer"></strong><span class="fortune-rule"></span><span class="fortune-end">隨 心</span>
+            <strong id="answer"></strong><span class="fortune-rule"></span><span class="fortune-end">靈 籤</span>
           </div>
         </div>
         <div class="interaction">
-          <p class="status" id="oracle-status" role="status" aria-live="polite">靜下心，想一個能用「是」或「否」回答的問題。</p>
-          <button class="ask-button" id="ask"><span class="button-mark" aria-hidden="true">✦</span><span id="ask-label">問</span><span class="button-mark" aria-hidden="true">✦</span></button>
-          <p class="hint" id="oracle-hint">輕按一問，靜候籤落</p>
+          <p class="status" id="oracle-status" role="status" aria-live="polite">靜下心，默念心中一事。</p>
+          <button class="ask-button" id="ask"><span class="button-mark" aria-hidden="true">✦</span><span id="ask-label">求籤</span><span class="button-mark" aria-hidden="true">✦</span></button>
+          <p class="hint" id="oracle-hint">輕按求籤，靜候籤落</p>
         </div>
+        <section class="lot-result" id="oracle-result" aria-labelledby="oracle-result-title" hidden>
+          <div class="lot-result-meta"><span id="oracle-result-number"></span><span class="lot-grade" id="oracle-result-grade"></span></div>
+          <h2 id="oracle-result-title"></h2>
+          <p class="lot-poem" id="oracle-poem"></p>
+          <details class="lot-reading" id="oracle-details">
+            <summary>白話解籤</summary>
+            <p id="oracle-reading"></p>
+          </details>
+          <a class="lot-source" id="oracle-source" target="_blank" rel="noopener">嗇色園籤文及解曰</a>
+        </section>
       </section>
       <div class="ritual-note"><span class="little-flower" aria-hidden="true">✳</span><p>世間事，未必只有一個答案。<span>願這一籤，讓你更聽見自己的心。</span></p></div>
       </div>
@@ -144,7 +154,7 @@
   <dialog id="instructions" aria-labelledby="dialog-title">
     <button id="close-dialog" class="close-dialog" aria-label="關閉使用須知">×</button>
     <span class="dialog-seal" id="dialog-seal" aria-hidden="true">問</span><h2 id="dialog-title">求籤須知</h2>
-    <div id="oracle-help"><p>先靜下心，默念一個能以「是」或「否」回答的問題，再輕按「問」，聽籤聲落下。</p><p class="dialog-foot">每次求籤皆獨立隨機。音效可於右上角開關；問題只需默念，毋須輸入。</p></div>
+    <div id="oracle-help"><p>先靜下心，默念一件想問的事，再輕按「求籤」。籤落後可閱讀原詩，並展開白話解籤。</p><p class="dialog-foot">每次求籤皆獨立隨機。音效可於右上角開關；問題只需默念，毋須輸入。</p></div>
     <div id="book-help" hidden><p>靜下心，默念一個問題。輕按「撕下一頁」，聽紙纖維慢慢分開，讓留在紙上的字，回應此刻的你。</p><p>每次會從書中隨機抽出一段話。留一點空白，讓自己的心接著說。</p><p class="dialog-foot">問題只需默念，毋須輸入。右上角可以開關音效。</p></div>
     <button class="dialog-confirm" id="understood">心中有問，便問</button>
   </dialog>

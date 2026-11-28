@@ -37,7 +37,7 @@ function setMode(mode, { writeHistory = false, focus = false } = {}) {
   document.querySelector('#oracle-help').hidden = mode !== 'oracle';
   document.querySelector('#book-help').hidden = mode !== 'book';
   document.querySelector('#understood').textContent = mode === 'book' ? '翻開心中一問' : '心中有問，便問';
-  document.title = mode === 'book' ? '答案之書 · 一問' : '一問 · 心有所問，籤有所答';
+  document.title = mode === 'book' ? '答案之書 · 一問' : '黃大仙靈籤 · 一問';
   const selectedTab = tabs.find((tab) => tab.dataset.mode === mode);
   if (focus || (previous !== mode && panels[previous]?.contains(document.activeElement))) selectedTab.focus({ preventScroll: true });
   if (writeHistory && window.location.hash !== `#${mode}`) history.pushState({ mode }, '', `#${mode}`);
