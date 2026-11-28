@@ -1,4 +1,4 @@
-import { initOracle } from './oracle.mjs';
+import { initOracle } from './oracle.mjs?v=20261128.3';
 import { initBook } from './book.mjs';
 import { createSoundController } from './audio.mjs';
 
