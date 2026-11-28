@@ -1,5 +1,5 @@
 import { drawIndex } from './lottery.mjs';
-import { sticks, stickSource } from './fortune-sticks.mjs';
+import { sticks } from './fortune-sticks.mjs';
 import { readingsForStick } from './fortune-aspects.mjs';
 
 function knock(ctx, master, track, at, pitch, level = 0.22, length = 0.065) {
@@ -55,6 +55,7 @@ export function initOracle(root, sounds) {
   const resultGrade = q('#oracle-result-grade');
   const poem = q('#oracle-poem');
   if (!result) return;
+  q('#oracle-source')?.remove();
   const cachedPanel = q('#oracle-details');
   const readings = document.createElement('div');
   readings.className = 'lot-reading';
@@ -69,9 +70,8 @@ export function initOracle(root, sounds) {
     <div class="lot-topics" id="oracle-topics"></div>
   `;
   if (cachedPanel) cachedPanel.replaceWith(readings);
-  else result.insertBefore(readings, q('#oracle-source'));
+  else result.append(readings);
   const explanation = q('#oracle-reading');
-  const source = q('#oracle-source');
   const topics = q('#oracle-topics');
   const toggleTopics = q('#oracle-all-topics');
   const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
@@ -160,7 +160,6 @@ export function initOracle(root, sounds) {
       });
       topics.replaceChildren(...topicRows.map(row => row.section));
       reflectTopicState();
-      source.href = new URL(`${number}/zh-TW`, stickSource);
       result.hidden = false;
       status.textContent = `抽得${label}「${title}」，${grade}。`;
       hint.textContent = '籤詩、白話解籤同十二項解說已顯示於下方';
