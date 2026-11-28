@@ -54,24 +54,43 @@ export function initOracle(root, sounds) {
   const resultTitle = q('#oracle-result-title');
   const resultGrade = q('#oracle-result-grade');
   const poem = q('#oracle-poem');
+  if (!result) return;
+  const cachedPanel = q('#oracle-details');
+  const readings = document.createElement('div');
+  readings.className = 'lot-reading';
+  readings.id = 'oracle-details';
+  readings.innerHTML = `
+    <h3>白話解籤</h3>
+    <p id="oracle-reading"></p>
+    <div class="lot-topics-header">
+      <h3>逐項解讀</h3>
+      <button class="lot-topics-all" id="oracle-all-topics" type="button" aria-controls="oracle-topics">收起全部</button>
+    </div>
+    <div class="lot-topics" id="oracle-topics"></div>
+  `;
+  if (cachedPanel) cachedPanel.replaceWith(readings);
+  else result.insertBefore(readings, q('#oracle-source'));
   const explanation = q('#oracle-reading');
-  const details = q('#oracle-details');
   const source = q('#oracle-source');
   const topics = q('#oracle-topics');
   const toggleTopics = q('#oracle-all-topics');
   const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
   let busy = false;
 
+  let topicRows = [];
+
+  function setTopicOpen(row, open) {
+    row.text.hidden = !open;
+    row.button.setAttribute('aria-expanded', String(open));
+  }
+
   function reflectTopicState() {
-    const sections = [...topics.children];
-    const allOpen = sections.length > 0 && sections.every(section => section.open);
-    toggleTopics.textContent = allOpen ? '收起全部' : '展開全部';
+    toggleTopics.textContent = topicRows.some(row => row.text.hidden) ? '展開全部' : '收起全部';
   }
 
   toggleTopics.addEventListener('click', () => {
-    const sections = [...topics.children];
-    const open = sections.some(section => !section.open);
-    for (const section of sections) section.open = open;
+    const open = topicRows.some(row => row.text.hidden);
+    for (const row of topicRows) setTopicOpen(row, open);
     reflectTopicState();
   });
 
@@ -95,7 +114,6 @@ export function initOracle(root, sounds) {
     askLabel.textContent = '搖籤中';
     fortune.hidden = true;
     result.hidden = true;
-    details.open = false;
     scene.classList.remove('has-result');
     scene.classList.add('shaking');
     status.textContent = '心中默念，靜候一籤……';
@@ -121,29 +139,38 @@ export function initOracle(root, sounds) {
       });
       poem.replaceChildren(...verses);
       explanation.textContent = reading;
-      const topicElements = readingsForStick(number).map(({ title, text }) => {
-        const section = document.createElement('details');
-        const heading = document.createElement('summary');
+      topicRows = readingsForStick(number).map(({ title, text }, index) => {
+        const section = document.createElement('section');
+        const button = document.createElement('button');
         const body = document.createElement('p');
-        heading.textContent = title;
+        button.type = 'button';
+        button.className = 'lot-topic-button';
+        button.textContent = title;
+        body.id = `oracle-topic-${index + 1}`;
         body.textContent = text;
-        section.append(heading, body);
-        section.addEventListener('toggle', reflectTopicState);
-        return section;
+        button.setAttribute('aria-controls', body.id);
+        section.append(button, body);
+        const row = { section, button, text: body };
+        setTopicOpen(row, true);
+        button.addEventListener('click', () => {
+          setTopicOpen(row, body.hidden);
+          reflectTopicState();
+        });
+        return row;
       });
-      topics.replaceChildren(...topicElements);
+      topics.replaceChildren(...topicRows.map(row => row.section));
       reflectTopicState();
       source.href = new URL(`${number}/zh-TW`, stickSource);
       result.hidden = false;
       status.textContent = `抽得${label}「${title}」，${grade}。`;
-      hint.textContent = '展開「白話解籤」查看籤意';
+      hint.textContent = '籤詩、白話解籤同十二項解說已顯示於下方';
       askLabel.textContent = '再問一籤';
       ask.disabled = false;
       ask.removeAttribute('aria-busy');
       busy = false;
 
       if (!root.hidden && (document.activeElement === ask || document.activeElement === document.body)) {
-        result.scrollIntoView({ block: 'nearest', behavior: reducedMotion.matches ? 'auto' : 'smooth' });
+        result.scrollIntoView({ block: 'start', behavior: reducedMotion.matches ? 'auto' : 'smooth' });
       }
     }, 3000);
   });

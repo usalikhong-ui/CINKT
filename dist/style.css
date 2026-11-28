@@ -33,6 +33,7 @@
 .lot-result {
   width: min(100%, 500px);
   margin: 28px auto 0;
+  scroll-margin-top: 12px;
   padding: clamp(20px, 5vw, 32px);
   background: #fffaf1;
   color: #3d3027;
@@ -64,12 +65,10 @@
   border-top: 1px solid #e4d5ba;
   text-align: left;
 }
-.lot-reading summary {
-  min-height: 44px;
-  padding: 12px 0;
-  cursor: pointer;
+.lot-reading > h3 {
+  margin: 14px 0 6px;
+  font-size: 17px;
   color: #822e25;
-  font-weight: 700;
 }
 .lot-reading p { margin: 0 0 14px; line-height: 1.8; }
 .lot-source {
@@ -102,14 +101,31 @@
   text-underline-offset: 3px;
   font-size: 14px;
 }
-.lot-topics details {
+.lot-topics section {
   border-bottom: 1px solid #e9dcc7;
 }
-.lot-topics summary {
-  font-size: 15px;
-  font-weight: 600;
+.lot-topic-button {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  min-height: 44px;
+  padding: 9px 0;
+  background: transparent;
+  border: 0;
+  text-align: left;
+  touch-action: manipulation;
   color: #52392e;
+  font-size: 15px;
+  font-weight: 700;
 }
+.lot-topic-button::after {
+  content: '＋';
+  font-weight: 400;
+}
+.lot-topic-button[aria-expanded="true"]::after { content: '−'; }
+.lot-topics p[hidden] { display: none; }
 .lot-topics p {
   padding-left: 12px;
   border-left: 2px solid #e0cdb1;
