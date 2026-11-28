@@ -1,5 +1,6 @@
 import { drawIndex } from './lottery.mjs';
 import { sticks, stickSource } from './fortune-sticks.mjs';
+import { readingsForStick } from './fortune-aspects.mjs';
 
 function knock(ctx, master, track, at, pitch, level = 0.22, length = 0.065) {
   const osc = track(ctx.createOscillator());
@@ -56,8 +57,23 @@ export function initOracle(root, sounds) {
   const explanation = q('#oracle-reading');
   const details = q('#oracle-details');
   const source = q('#oracle-source');
+  const topics = q('#oracle-topics');
+  const toggleTopics = q('#oracle-all-topics');
   const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
   let busy = false;
+
+  function reflectTopicState() {
+    const sections = [...topics.children];
+    const allOpen = sections.length > 0 && sections.every(section => section.open);
+    toggleTopics.textContent = allOpen ? '收起全部' : '展開全部';
+  }
+
+  toggleTopics.addEventListener('click', () => {
+    const sections = [...topics.children];
+    const open = sections.some(section => !section.open);
+    for (const section of sections) section.open = open;
+    reflectTopicState();
+  });
 
   ask.addEventListener('click', () => {
     if (busy) return;
@@ -105,6 +121,18 @@ export function initOracle(root, sounds) {
       });
       poem.replaceChildren(...verses);
       explanation.textContent = reading;
+      const topicElements = readingsForStick(number).map(({ title, text }) => {
+        const section = document.createElement('details');
+        const heading = document.createElement('summary');
+        const body = document.createElement('p');
+        heading.textContent = title;
+        body.textContent = text;
+        section.append(heading, body);
+        section.addEventListener('toggle', reflectTopicState);
+        return section;
+      });
+      topics.replaceChildren(...topicElements);
+      reflectTopicState();
       source.href = new URL(`${number}/zh-TW`, stickSource);
       result.hidden = false;
       status.textContent = `抽得${label}「${title}」，${grade}。`;
